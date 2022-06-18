@@ -1,0 +1,37 @@
+// 添加的指令类型
+`define IRMOV		4'h6	// check
+`define RRMOV		4'h7
+`define RMMOV		4'h8	// check
+`define PUSH		4'ha	// check
+`define POP			4'hb	// check 
+`define ADD			4'h0 //fun for alu
+`define SUB			4'h1
+`define OPR			4'h3
+`define OPI			4'h4
+ # 设置的指令每条3字节
+ IRMOV #100,R2				
+ IRMOV #16,R3
+ SUB R2,R3,R3
+ RRMOV R3,R5
+ IRMOV #20,RSP ;栈顶位置
+ POP R4
+ PUSH R3
+ RMMOV R5,#1(RSP)
+ CALL PROC
+ HLT
+ PROC: RET
+ 
+encoding：
+ 60 02 64	IRMOV #100,R2
+ 60 03 10	IRMOV #16,R3
+ 31 23 30	SUB R2,R3,R3
+ 70 35 00	RRMOV R3,R5
+ 60 07 14 	IRMOV #20,RSP ;栈顶位置
+ b0 40 00	POP R4
+ a0 30 00 	PUSH R3
+ 80 57 01	RMMOV R5,#1(RSP)
+ c0	00 1c	CALL PROC
+ f0			HLT
+ d0			RET
+
+
